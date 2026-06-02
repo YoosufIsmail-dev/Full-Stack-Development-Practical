@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study 06 — Deborah Chidozie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0b;
+    --bg2: #141410;
+    --cream: #f5f0e8;
+    --gold: #c9a84c;
+    --gold2: #e8c97a;
+    --rust: #c4663a;
+    --muted: #6b6757;
+    --border: rgba(201,168,76,0.18);
+    --text: #e8e4dc;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 999; opacity: 0.35;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(13,13,11,0.88);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--gold);
+    letter-spacing: 0.04em; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+    font-family: 'DM Mono', monospace;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    padding-top: 5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 3rem 6rem 4rem;
+    border-right: 1px solid var(--border);
+  }
+  .case-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.18em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .case-label::before {
+    content: ''; display: block;
+    width: 2rem; height: 1px; background: var(--gold);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    line-height: 1.05;
+    font-weight: 900;
+    color: var(--cream);
+    margin-bottom: 2rem;
+  }
+  .hero-title em {
+    font-style: italic; color: var(--gold);
+  }
+  .hero-desc {
+    font-size: 1rem; color: var(--muted);
+    max-width: 38ch; line-height: 1.75;
+    margin-bottom: 3rem;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--border);
+    font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .tag:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+  }
+  .hero-image-wrapper {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    padding: 4rem 3rem;
+  }
+  .mockup-frame {
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: 4/3;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  }
+  .mockup-topbar {
+    height: 32px; background: #1a1a17;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; padding: 0 1rem; gap: 0.5rem;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot.r { background: #c4663a; }
+  .dot.y { background: #c9a84c; }
+  .dot.g { background: #5a8a5f; }
+  .mockup-content {
+    padding: 1.5rem;
+    display: grid; gap: 0.75rem;
+  }
+  .mock-bar { height: 8px; background: var(--border); border-radius: 4px; }
+  .mock-bar.wide { width: 75%; }
+  .mock-bar.med { width: 55%; }
+  .mock-bar.short { width: 35%; }
+  .mock-img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.5rem; }
+  .mock-img {
+    aspect-ratio: 16/9;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #1e1e1a, #2a2a24);
+    border: 1px solid var(--border);
+  }
+  .mock-img.gold { background: linear-gradient(135deg, #2a2318, #3d3220); }
+
+  /* FLOATING STATS */
+  .stat-card {
+    position: absolute;
+    background: rgba(20,20,16,0.95);
+    border: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    backdrop-filter: blur(10px);
+  }
+  .stat-card.top-right { top: 3rem; right: 1rem; }
+  .stat-card.bottom-left { bottom: 3rem; left: 1rem; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.68rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    font-family: 'DM Mono', monospace; margin-top: 0.2rem;
+  }
+
+  /* SECTION GENERIC */
+  section { padding: 7rem 4rem; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 1.5rem;
+    height: 1px; background: var(--gold);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 700; line-height: 1.15;
+    color: var(--cream); margin-bottom: 1.5rem;
+  }
+
+  /* OVERVIEW */
+  .overview {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: 2fr 1fr;
+    gap: 0;
+  }
+  .overview-main { padding: 6rem 4rem; border-right: 1px solid var(--border); }
+  .overview-sidebar { padding: 6rem 3rem; }
+  .overview-text { font-size: 1.05rem; color: var(--muted); line-height: 1.85; max-width: 60ch; }
+  .overview-text strong { color: var(--text); font-weight: 500; }
+
+  .meta-item { margin-bottom: 2rem; }
+  .meta-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 0.35rem;
+  }
+  .meta-val { font-size: 0.9rem; color: var(--text); }
+
+  /* PROBLEM */
+  .problem-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5px; background: var(--border); border: 1px solid var(--border);
+    margin-top: 3rem; border-radius: 4px; overflow: hidden;
+  }
+  .problem-card {
+    background: var(--bg2);
+    padding: 2.5rem;
+  }
+  .problem-card-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 900;
+    color: var(--border); line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .problem-card-title {
+    font-size: 1.05rem; font-weight: 500;
+    color: var(--cream); margin-bottom: 0.75rem;
+  }
+  .problem-card-text { font-size: 0.9rem; color: var(--muted); line-height: 1.75; }
+
+  /* RESEARCH */
+  .research { background: var(--bg); }
+  .insight-list { margin-top: 3rem; display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .insight-item {
+    background: var(--bg2);
+    padding: 2rem 2.5rem;
+    display: grid; grid-template-columns: 3rem 1fr;
+    gap: 1.5rem; align-items: start;
+    transition: background 0.2s;
+  }
+  .insight-item:hover { background: #181815; }
+  .insight-num {
+    font-family: 'DM Mono', monospace;
+    color: var(--gold); font-size: 0.8rem;
+    margin-top: 0.2rem;
+  }
+  .insight-text { font-size: 0.95rem; color: var(--muted); line-height: 1.75; }
+  .insight-text strong { color: var(--text); font-weight: 500; }
+
+  /* DESIGN PROCESS */
+  .process-track {
+    margin-top: 4rem;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 0; position: relative;
+    border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+  }
+  .process-step {
+    padding: 2.5rem 2rem;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    position: relative;
+    transition: background 0.2s;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step:hover { background: #181815; }
+  .process-step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; color: var(--gold);
+    letter-spacing: 0.1em; margin-bottom: 1rem;
+  }
+  .process-step-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--cream);
+    margin-bottom: 0.75rem; font-weight: 700;
+  }
+  .process-step-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.65; }
+
+  /* WIREFRAMES */
+  .wireframes-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .wireframe-grid {
+    margin-top: 3.5rem;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .wf-card {
+    border: 1px solid var(--border); border-radius: 6px;
+    overflow: hidden; background: var(--bg);
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .wf-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+  .wf-header {
+    padding: 1rem 1.25rem;
+    background: #1a1a17;
+    border-bottom: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .wf-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .wf-line { height: 6px; background: var(--border); border-radius: 3px; }
+  .wf-line.full { width: 100%; }
+  .wf-line.wide { width: 80%; }
+  .wf-line.med { width: 60%; }
+  .wf-line.short { width: 40%; }
+  .wf-box { height: 80px; background: #1a1a17; border: 1px solid var(--border); border-radius: 4px; margin: 0.5rem 0; }
+  .wf-box.tall { height: 120px; }
+  .wf-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .wf-grid-2 .wf-box { height: 60px; }
+
+  /* OUTCOMES */
+  .outcomes { background: var(--bg); }
+  .outcomes-grid {
+    margin-top: 3rem;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px;
+    background: var(--border); border: 1px solid var(--border);
+    border-radius: 4px; overflow: hidden;
+  }
+  .outcome-card {
+    background: var(--bg2); padding: 3rem 2.5rem;
+    transition: background 0.2s;
+  }
+  .outcome-card:hover { background: #181815; }
+  .outcome-metric {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; color: var(--gold);
+    font-weight: 900; line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .outcome-label { font-size: 0.9rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
+  .outcome-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+
+  /* LEARNINGS */
+  .learnings { background: var(--bg2); border-top: 1px solid var(--border); }
+  .learnings-body { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
+  .learning-item { padding: 2rem; border: 1px solid var(--border); border-radius: 4px; transition: border-color 0.2s; }
+  .learning-item:hover { border-color: var(--gold); }
+  .learning-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+  .learning-title { font-size: 1rem; font-weight: 500; color: var(--cream); margin-bottom: 0.5rem; }
+  .learning-text { font-size: 0.875rem; color: var(--muted); line-height: 1.75; }
+
+  /* NEXT CASE */
+  .next-case {
+    padding: 5rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .next-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; color: var(--muted);
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .next-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; color: var(--cream);
+    font-weight: 700;
+  }
+  .next-btn {
+    display: flex; align-items: center; gap: 0.75rem;
+    color: var(--gold); text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem; letter-spacing: 0.12em;
+    text-transform: uppercase; transition: gap 0.2s;
+    border: 1px solid var(--border); padding: 0.85rem 1.5rem; border-radius: 2px;
+  }
+  .next-btn:hover { gap: 1.25rem; border-color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg);
+  }
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--gold);
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.1em;
+    text-transform: uppercase; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* SCROLL PROGRESS */
+  #progress {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--rust));
+    z-index: 200; transition: width 0.1s;
+    width: 0%;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 6rem 1.5rem 3rem; border-right: none; border-bottom: 1px solid var(--border); }
+    .hero-right { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .overview { grid-template-columns: 1fr; }
+    .overview-main { padding: 3rem 1.5rem; border-right: none; border-bottom: 1px solid var(--border); }
+    .overview-sidebar { padding: 3rem 1.5rem; }
+    .problem-grid, .wireframe-grid, .outcomes-grid { grid-template-columns: 1fr; }
+    .process-track { grid-template-columns: 1fr 1fr; }
+    .process-step { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .learnings-body { grid-template-columns: 1fr; }
+    .next-case { flex-direction: column; gap: 2rem; align-items: flex-start; }
+    footer { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <a href="#" class="nav-logo">Deborah Chidozie</a>
+  <ul class="nav-links">
+    <li><a href="#">Work</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Process</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="case-label">Case Study — 06</div>
+    <h1 class="hero-title">
+      Redesigning <em>Financial</em><br>Inclusion for<br>Underserved Users
+    </h1>
+    <p class="hero-desc">
+      A mobile-first banking experience crafted to reduce friction for first-time digital finance users in emerging markets — combining deep empathy research with accessible interaction design.
+    </p>
+    <div class="tags">
+      <span class="tag">UX Research</span>
+      <span class="tag">Product Design</span>
+      <span class="tag">Mobile</span>
+      <span class="tag">Fintech</span>
+      <span class="tag">Accessibility</span>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-image-wrapper">
+      <div class="mockup-frame">
+        <div class="mockup-topbar">
+          <div class="dot r"></div>
+          <div class="dot y"></div>
+          <div class="dot g"></div>
+        </div>
+        <div class="mockup-content">
+          <div class="mock-bar wide" style="height:14px;background:rgba(201,168,76,0.2);border-radius:2px;"></div>
+          <div class="mock-bar short"></div>
+          <div class="mock-img-row" style="margin-top:1rem;">
+            <div class="mock-img gold"></div>
+            <div class="mock-img"></div>
+            <div class="mock-img"></div>
+            <div class="mock-img gold"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0.4rem;margin-top:0.5rem;">
+            <div class="mock-bar wide"></div>
+            <div class="mock-bar med"></div>
+            <div class="mock-bar short"></div>
+          </div>
+        </div>
+      </div>
+      <div class="stat-card top-right">
+        <div class="stat-num">3.2M</div>
+        <div class="stat-label">Users Impacted</div>
+      </div>
+      <div class="stat-card bottom-left">
+        <div class="stat-num">↑67%</div>
+        <div class="stat-label">Task Completion</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<div class="overview fade-up">
+  <div class="overview-main">
+    <div class="section-label">Overview</div>
+    <h2 class="section-title">The Challenge</h2>
+    <p class="overview-text">
+      Millions of people in Nigeria and across West Africa remain <strong>unbanked or underbanked</strong> — not due to lack of desire, but because existing digital banking products are designed for a different user. Complex onboarding flows, financial jargon, and interfaces that assume literacy levels that many users don't have create invisible walls to inclusion.
+      <br><br>
+      I was brought in as the <strong>lead product designer</strong> to rethink the core user journey — from account creation through daily money management — with empathy at the center of every decision.
+    </p>
+  </div>
+  <div class="overview-sidebar">
+    <div class="meta-item">
+      <div class="meta-key">Role</div>
+      <div class="meta-val">Lead UX Designer</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-key">Duration</div>
+      <div class="meta-val">14 Weeks</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-key">Team</div>
+      <div class="meta-val">2 Designers, 3 Engineers, 1 PM</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-key">Tools</div>
+      <div class="meta-val">Figma, Maze, Miro, FigJam</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-key">Platform</div>
+      <div class="meta-val">Android (primary), iOS</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="fade-up">
+  <div class="section-label">Problem Space</div>
+  <h2 class="section-title">What was broken</h2>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-card-num">01</div>
+      <div class="problem-card-title">Onboarding Drop-off</div>
+      <div class="problem-card-text">78% of new users abandoned sign-up before completing identity verification. The flow required 11 screens with dense form fields and no progress indication.</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-card-num">02</div>
+      <div class="problem-card-title">Language Barrier</div>
+      <div class="problem-card-text">Financial terminology was used without explanation. Terms like "beneficiary", "standing order", and "NUBAN" were incomprehensible to first-time users.</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-card-num">03</div>
+      <div class="problem-card-title">Low Trust Signals</div>
+      <div class="problem-card-text">Users expressed deep distrust of digital money — a barrier rooted in past fraud experiences and a lack of visible security reassurance in the interface.</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-card-num">04</div>
+      <div class="problem-card-title">Poor Error Recovery</div>
+      <div class="problem-card-text">When transactions failed, error messages were cryptic codes rather than actionable guidance. Users had no clear path forward and often abandoned the task entirely.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="research fade-up">
+  <div class="section-label">Research</div>
+  <h2 class="section-title">What we learned from real people</h2>
+  <p style="color:var(--muted);max-width:55ch;line-height:1.8;">
+    We conducted 24 in-depth interviews and 6 contextual observation sessions across Lagos and Ibadan, supplemented by a diary study with 40 participants over 3 weeks.
+  </p>
+  <div class="insight-list">
+    <div class="insight-item">
+      <div class="insight-num">/ 01</div>
+      <div class="insight-text"><strong>Trust is earned through social proof, not institutions.</strong> Users trusted recommendations from family members over bank branding. Peer testimonials were more persuasive than security certifications.</div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-num">/ 02</div>
+      <div class="insight-text"><strong>Voice and visual over text.</strong> 38% of participants preferred voice-guided flows or icon-only interfaces. Many were semi-literate or used phones in low-light conditions.</div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-num">/ 03</div>
+      <div class="insight-text"><strong>Fear of irreversible actions.</strong> The single biggest concern was sending money to the wrong person. Users wanted <strong>multiple confirmation steps</strong> — even if it made transactions slower.</div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-num">/ 04</div>
+      <div class="insight-text"><strong>Context interruptions are constant.</strong> Most transactions were attempted during multitasking — on buses, in markets, between calls. Flows needed to survive a 5-minute interruption gracefully.</div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-num">/ 05</div>
+      <div class="insight-text"><strong>Data costs create real friction.</strong> Heavy animations and large media assets caused noticeable load times on 3G. Users on prepaid data were acutely aware of every page load.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="fade-up">
+  <div class="section-label">Design Process</div>
+  <h2 class="section-title">How we got to the solution</h2>
+  <div class="process-track">
+    <div class="process-step">
+      <div class="process-step-num">01 —</div>
+      <div class="process-step-name">Discover</div>
+      <div class="process-step-desc">User interviews, competitive audit, and heuristic evaluation of the existing product.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">02 —</div>
+      <div class="process-step-name">Define</div>
+      <div class="process-step-desc">Affinity mapping, persona synthesis, and HMW statements to align the team on the problem.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">03 —</div>
+      <div class="process-step-name">Ideate</div>
+      <div class="process-step-desc">Design sprints, crazy-8s, and concept sketching with the engineering team to explore the solution space.</div>
+    </div>
+    <div class="process-step">
+      <div class="process-step-num">04 —</div>
+      <div class="process-step-name">Prototype</div>
+      <div class="process-step-desc">Low-fi wireframes → mid-fi flows → interactive high-fi Figma prototypes across 3 iteration rounds.</div>
+    </div>
+    <div class="process-step" style="border-right:none;">
+      <div class="process-step-num">05 —</div>
+      <div class="process-step-name">Test</div>
+      <div class="process-step-desc">Moderated usability testing with 18 participants, Maze for unmoderated flows, and A/B testing post-launch.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WIREFRAMES -->
+<section class="wireframes-section fade-up">
+  <div class="section-label">Design Artefacts</div>
+  <h2 class="section-title">From sketch to screen</h2>
+  <div class="wireframe-grid">
+    <div class="wf-card">
+      <div class="wf-header">Screen / Onboarding — Step 1 of 4</div>
+      <div class="wf-body">
+        <div class="wf-line full"></div>
+        <div class="wf-line med"></div>
+        <div class="wf-box tall"></div>
+        <div class="wf-line wide"></div>
+        <div class="wf-line short"></div>
+        <div style="margin-top:0.5rem;height:36px;background:rgba(201,168,76,0.15);border-radius:3px;border:1px solid var(--border);"></div>
+      </div>
+    </div>
+    <div class="wf-card">
+      <div class="wf-header">Screen / Dashboard — Home</div>
+      <div class="wf-body">
+        <div class="wf-line short"></div>
+        <div class="wf-box" style="height:60px;background:rgba(201,168,76,0.08);"></div>
+        <div class="wf-grid-2"><div class="wf-box"></div><div class="wf-box"></div></div>
+        <div class="wf-line wide"></div>
+        <div class="wf-line med"></div>
+        <div class="wf-line full"></div>
+      </div>
+    </div>
+    <div class="wf-card">
+      <div class="wf-header">Screen / Send Money — Confirm</div>
+      <div class="wf-body">
+        <div class="wf-line med"></div>
+        <div class="wf-box" style="height:48px;"></div>
+        <div style="display:flex;flex-direction:column;gap:0.3rem;">
+          <div class="wf-line full"></div>
+          <div class="wf-line wide"></div>
+          <div class="wf-line med"></div>
+        </div>
+        <div class="wf-grid-2" style="margin-top:0.5rem;">
+          <div style="height:36px;background:var(--border);border-radius:3px;"></div>
+          <div style="height:36px;background:rgba(201,168,76,0.15);border:1px solid var(--border);border-radius:3px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section class="outcomes fade-up">
+  <div class="section-label">Impact</div>
+  <h2 class="section-title">What changed after launch</h2>
+  <div class="outcomes-grid">
+    <div class="outcome-card">
+      <div class="outcome-metric">↑67%</div>
+      <div class="outcome-label">Onboarding Completion</div>
+      <div class="outcome-desc">From 22% to 89% completion rate after reducing sign-up to 4 steps and adding progress indicators and contextual help.</div>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-metric">↓43%</div>
+      <div class="outcome-label">Support Ticket Volume</div>
+      <div class="outcome-desc">Actionable error messages and inline guidance dramatically reduced confusion-related support contacts in the first 60 days.</div>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-metric">4.7★</div>
+      <div class="outcome-label">App Store Rating</div>
+      <div class="outcome-desc">Up from 3.1 stars. User reviews highlighted "easy to understand", "finally feels safe", and "works even with slow internet".</div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNINGS -->
+<section class="learnings fade-up">
+  <div class="section-label">Reflections</div>
+  <h2 class="section-title">What I'd carry forward</h2>
+  <div class="learnings-body">
+    <div class="learning-item">
+      <div class="learning-icon">◈</div>
+      <div class="learning-title">Design for the edges, benefit the center</div>
+      <div class="learning-text">When you design for users with low literacy, intermittent connectivity, and distrust of institutions — you end up with a product that's better for every user. Accessibility is a quality multiplier.</div>
+    </div>
+    <div class="learning-item">
+      <div class="learning-icon">◈</div>
+      <div class="learning-title">Context is not a constraint — it's a creative brief</div>
+      <div class="learning-text">Understanding that users transact on moving buses or in noisy markets didn't limit the design — it made it sharper. Real environmental constraints produce more honest solutions.</div>
+    </div>
+    <div class="learning-item">
+      <div class="learning-icon">◈</div>
+      <div class="learning-title">Trust is designed, not assumed</div>
+      <div class="learning-text">Every screen is an opportunity to signal safety. Receipts, confirmations, and even error messages are moments to reinforce that the user's money is protected. We treated trust as a feature, not a legal disclaimer.</div>
+    </div>
+    <div class="learning-item">
+      <div class="learning-icon">◈</div>
+      <div class="learning-title">Involve engineers in the problem, not just the solution</div>
+      <div class="learning-text">Our most creative solutions came from early engineering collaboration during ideation. Performance constraints surfaced in week 1 — not in QA — made the final product measurably faster.</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT CASE -->
+<div class="next-case">
+  <div>
+    <div class="next-label">Next Case Study</div>
+    <div class="next-title">Redesigning Navigation for a Healthcare Super App →</div>
+  </div>
+  <a href="#" class="next-btn">View Case Study ↗</a>
+</div>
+
+<footer>
+  <div class="footer-name">Deborah Chidozie — Product Designer</div>
+  <div class="footer-links">
+    <a href="#">LinkedIn</a>
+    <a href="#">Behance</a>
+    <a href="#">Dribbble</a>
+    <a href="#">Email</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('progress').style.width = (scrollTop / docHeight * 100) + '%';
+  });
+
+  // Fade-up on scroll
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Stagger child animations for cards inside grid parents
+  document.querySelectorAll('.problem-grid, .process-track, .outcomes-grid, .wireframe-grid').forEach(grid => {
+    const children = grid.querySelectorAll('.problem-card, .process-step, .outcome-card, .wf-card');
+    children.forEach((child, i) => {
+      child.style.opacity = '0';
+      child.style.transform = 'translateY(20px)';
+      child.style.transition = `opacity 0.5s ease ${i * 0.1}s, transform 0.5s ease ${i * 0.1}s`;
+    });
+    const gridObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const kids = entry.target.querySelectorAll('.problem-card, .process-step, .outcome-card, .wf-card');
+          kids.forEach(k => { k.style.opacity = '1'; k.style.transform = 'translateY(0)'; });
+        }
+      });
+    }, { threshold: 0.1 });
+    gridObserver.observe(grid);
+  });
+</script>
+</body>
+</html>
