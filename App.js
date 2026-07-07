@@ -1,65 +1,108 @@
-import React, { useState } from 'react';
-import format from 'date-fns/format';
-import BpkCalendar, { CALENDAR_SELECTION_TYPE } from 'bpk-component-calendar';
+import React, { Component } from 'react';
+import { BpkCode } from 'bpk-component-code';
 import BpkButton from 'bpk-component-button';
-import logo from './logo.svg';
-import './App.scss';
+import BpkText from 'bpk-component-text';
+import BpkCalendar, { CALENDAR_SELECTION_TYPE } from 'bpk-component-calendar';
+import format from 'date-fns/format';
+import STYLES from './App.scss';
 
-const formatMonth = (date) => format(date, 'MMMM yyyy');
-const formatDateFull = (date) => format(date, 'EEEE, do MMMM yyyy');
 
+const c = className => STYLES[className] || 'UNKNOWN';
+const formatDateFull = date => format(date, 'EEEE, do MMMM yyyy');
+const formatMonth = date => format(date, 'MMMM yyyy');
 const daysOfWeek = [
-  { name: 'Sunday', nameAbbr: 'Sun', index: 0, isWeekend: true },
-  { name: 'Monday', nameAbbr: 'Mon', index: 1, isWeekend: false },
-  { name: 'Tuesday', nameAbbr: 'Tue', index: 2, isWeekend: false },
-  { name: 'Wednesday', nameAbbr: 'Wed', index: 3, isWeekend: false },
-  { name: 'Thursday', nameAbbr: 'Thu', index: 4, isWeekend: false },
-  { name: 'Friday', nameAbbr: 'Fri', index: 5, isWeekend: false },
-  { name: 'Saturday', nameAbbr: 'Sat', index: 6, isWeekend: true },
+  {
+    name: 'Sunday',
+    nameAbbr: 'Sun',
+    index: 0,
+    isWeekend: true,
+  },
+  {
+    name: 'Monday',
+    nameAbbr: 'Mon',
+    index: 1,
+    isWeekend: false,
+  },
+  {
+    name: 'Tuesday',
+    nameAbbr: 'Tues',
+    index: 2,
+    isWeekend: false,
+  },
+  {
+    name: 'Wednesday',
+    nameAbbr: 'Wed',
+    index: 3,
+    isWeekend: false,
+  },
+  {
+    name: 'Thursday',
+    nameAbbr: 'Thur',
+    index: 4,
+    isWeekend: false,
+  },
+  {
+    name: 'Friday',
+    nameAbbr: 'Fri',
+    index: 5,
+    isWeekend: false,
+  },
+  {
+    name: 'Saturday',
+    nameAbbr: 'Sat',
+    index: 6,
+    isWeekend: true,
+  },
 ];
 
-function App() {
-  const [selectionConfiguration, setSelectionConfiguration] = useState({
-    type: CALENDAR_SELECTION_TYPE.single,
-    date: null,
-  });
 
-  const handleDateSelect = (date) => {
-    setSelectionConfiguration({
-      type: CALENDAR_SELECTION_TYPE.single,
-      date,
+export default class App extends Component {
+  constructor () {
+    super();
+
+    this.state = {
+      selectionConfiguration: {
+        type: CALENDAR_SELECTION_TYPE.single,
+        date: null,
+      }
+    };
+  }
+
+  handleDateSelect = (date) => {
+    this.setState({
+      selectionConfiguration: {
+        type: CALENDAR_SELECTION_TYPE.single,
+        date: date,
+      },
     });
-  };
+  }
 
-  const handleContinueClick = () => {
-    // Existing click functionality left as-is.
-    // eslint-disable-next-line no-console
-    console.log('Continue clicked', selectionConfiguration.date);
-  };
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>Flight Schedule</h1>
+  render () {
+    return (
+      <div className={c('App')}>
+      <header className={c('App__header')}>
+        <div className={c('App__header-inner')}>
+          <BpkText tagName="h1" textStyle="xxl" className={c('App__heading')}>Reservation Date</BpkText>
+        </div>
       </header>
-      <main className="App-main">
-        <BpkCalendar
-          id="calendar"
-          weekStartsOn={1}
-          daysOfWeek={daysOfWeek}
-          formatMonth={formatMonth}
-          formatDateFull={formatDateFull}
-          selectionConfiguration={selectionConfiguration}
-          onDateSelect={handleDateSelect}
-          changeMonthLabel="Change month"
-          markToday
-          markOutsideDays
-        />
-        <BpkButton onClick={handleContinueClick}>Continue</BpkButton>
+      <main className={c('App__main')}>
+        <div>
+          <BpkCalendar
+            id='calendar'
+            onDateSelect={this.handleDateSelect}
+            formatMonth={formatMonth}
+            formatDateFull={formatDateFull}
+            daysOfWeek={daysOfWeek}
+            weekStartsOn={0}
+            changeMonthLabel="Change month"
+            nextMonthLabel="Next month"
+            previousMonthLabel="Previous month"
+            selectionConfiguration={this.state.selectionConfiguration}
+          />
+          </div>
+        <BpkButton onClick={() => alert('It works!')}>Continue</BpkButton>
       </main>
     </div>
-  );
+    )
+  }
 }
-
-export default App;
